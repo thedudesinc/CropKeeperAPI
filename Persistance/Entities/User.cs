@@ -1,6 +1,8 @@
+using CropKeeperApi.Domain.Abstractions.Entities;
+
 namespace CropKeeperApi.Persistance.Entities;
 
-public class User
+public class User : IEntity
 {
     public Guid Id { get; set; }
 
@@ -8,7 +10,7 @@ public class User
 
     public string Email { get; set; } = string.Empty;
 
-    public string Passowrd { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 
     public bool AllowEmailNotifications { get; set; } = true;
 
@@ -18,5 +20,5 @@ public class User
 
     public DateTime DateModified { get; set; }
 
-    public DateTime DateDeleted { get; set; }
+    public DateTime? DateDeleted { get; set; }
 }

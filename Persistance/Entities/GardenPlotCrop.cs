@@ -1,6 +1,8 @@
+using CropKeeperApi.Domain.Abstractions.Entities;
+
 namespace CropKeeperApi.Persistance.Entities;
 
-public class GardenPlotCrop
+public class GardenPlotCrop : IEntity
 {
     public Guid Id { get; set; }
 
@@ -15,4 +17,6 @@ public class GardenPlotCrop
     public DateTime DateCreated { get; set; }
 
     public DateTime DateModified { get; set; }
+
+    public DateTime? DateDeleted { get; set; }
 }

@@ -1,6 +1,8 @@
+using CropKeeperApi.Domain.Abstractions.Entities;
+
 namespace CropKeeperApi.Persistance.Entities;
 
-public class Notification
+public class Notification : IEntity
 {
     public Guid Id { get; set; }
 
@@ -14,5 +16,5 @@ public class Notification
 
     public DateTime DateModified { get; set; }
 
-    public DateTime DateDeleted { get; set; }
+    public DateTime? DateDeleted { get; set; }
 }

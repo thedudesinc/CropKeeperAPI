@@ -1,8 +1,6 @@
-using CropKeeperApi.Domain.Abstractions.Entities;
+namespace CropKeeperApi.Domain.Abstractions.Entities;
 
-namespace CropKeeperApi.Persistance.Entities;
-
-public class Crop : IEntity
+public interface IEntity
 {
     public Guid Id { get; set; }
 
