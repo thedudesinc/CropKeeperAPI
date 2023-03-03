@@ -3,56 +3,75 @@ using Microsoft.EntityFrameworkCore;
 using CropKeeperApi.Domain.Abstractions.Repositories;
 using CropKeeperApi.Domain.Abstractions.Entities;
 using CropKeeperApi.Persistance;
+using AutoMapper;
 
 namespace CropKeeperApi.Persistence.Repositories;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity>
+public class GenericRepository<TEntity, TInput, TOutput> : IGenericRepository<TEntity, TInput, TOutput>
     where TEntity : class, IEntity
+    where TInput : class, IInput
+    where TOutput : class, IOutput
 {
+    private readonly IMapper _mapper;
     private readonly CropKeeperContext _context;
 
-    public GenericRepository(CropKeeperContext context) => _context = context;
+    public GenericRepository(CropKeeperContext context, IMapper mapper) => (_context, _mapper) = (context, mapper);
 
-    public IQueryable<TEntity> Get()
+    public async Task<IEnumerable<TOutput>> Get(CancellationToken ct)
     {
-        return _context.Set<TEntity>().AsNoTracking();
+        var items = await _context.Set<TEntity>().AsNoTracking().ToListAsync(ct);
+        return (IEnumerable<TOutput>)_mapper.Map(items, items.GetType(), typeof(IEnumerable<TOutput>));
     }
 
-    public async Task<TEntity> Get(Guid id)
+    public async Task<TOutput> Get(Guid id, CancellationToken ct)
     {
-        return await _context.Set<TEntity>()
-                    .AsNoTracking()
-                    .SingleAsync(e => e.Id == id);
+        var item = await _context.Set<TEntity>()
+                    .SingleAsync(e => e.Id == id, ct);
+
+        return (TOutput)_mapper.Map(item, item.GetType(), typeof(TOutput));
     }
 
-    public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
-    {
-        return await _context.Set<TEntity>().Where(predicate).ToListAsync();
-    }
+    // public async Task<IEnumerable<TOutput>> Find(Expression<Func<TInput, bool>> predicate)
+    // {
+    //     return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+    // }
 
-    public async Task Create(TEntity entity)
+    public async Task<TOutput> Create(TInput input, CancellationToken ct)
     {
+        var entity = (TEntity)_mapper.Map(input, input.GetType(), typeof(TEntity));
+
         entity.DateCreated = DateTime.Now;
         entity.DateModified = DateTime.Now;
 
-        await _context.Set<TEntity>().AddAsync(entity);
-        await _context.SaveChangesAsync();
+        _context.Set<TEntity>().Add(entity);
+        await _context.SaveChangesAsync(ct);
+
+        return (TOutput)_mapper.Map(entity, entity.GetType(), typeof(TOutput));
     }
 
-    public async Task Update(Guid id, TEntity entity)
+    public async Task<TOutput> Update(Guid id, TInput input, CancellationToken ct)
     {
+        var existing = await _context.Set<TEntity>()
+                    .SingleAsync(e => e.Id == id, ct);
+
+        var entity = _mapper.Map(input, existing);
+
         entity.DateModified = DateTime.Now;
 
         _context.Set<TEntity>().Update(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(ct);
+
+        return (TOutput)_mapper.Map(entity, entity.GetType(), typeof(TOutput)); ;
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(Guid id, CancellationToken ct)
     {
-        var entity = await Get(id);
+        var entity = await _context.Set<TEntity>()
+                    .SingleAsync(e => e.Id == id, ct);
+
         entity.DateDeleted = DateTime.Now;
 
         _context.Set<TEntity>().Update(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(ct);
     }
 }

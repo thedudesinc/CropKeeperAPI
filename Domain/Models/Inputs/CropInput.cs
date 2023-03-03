@@ -1,11 +1,9 @@
 using CropKeeperApi.Domain.Abstractions.Entities;
 
-namespace CropKeeperApi.Persistance.Entities;
+namespace CropKeeperApi.Domain.Models.Inputs;
 
-public class Crop : IEntity
+public class CropInput : IInput
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; } = String.Empty;
 
     public int MaxHardiness { get; set; }
@@ -19,10 +17,4 @@ public class Crop : IEntity
     public string PlantHabit { get; set; } = String.Empty;
 
     public bool IsPerennial { get; set; }
-
-    public DateTime DateCreated { get; set; }
-
-    public DateTime DateModified { get; set; }
-
-    public DateTime? DateDeleted { get; set; }
 }

@@ -3,17 +3,20 @@ using CropKeeperApi.Domain.Abstractions.Entities;
 
 namespace CropKeeperApi.Domain.Abstractions.Repositories;
 
-public interface IGenericRepository<TEntity> where TEntity : class, IEntity
+public interface IGenericRepository<TEntity, TInput, TOutput>
+    where TEntity : class, IEntity
+    where TInput : class, IInput
+    where TOutput : class, IOutput
 {
-    IQueryable<TEntity> Get();
+    Task<IEnumerable<TOutput>> Get(CancellationToken ct);
 
-    Task<TEntity> Get(Guid id);
+    Task<TOutput> Get(Guid id, CancellationToken ct);
 
-    Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+    // Task<IEnumerable<TOutput>> Find(Expression<Func<TInput, bool>> predicate);
 
-    Task Create(TEntity entity);
+    Task<TOutput> Create(TInput input, CancellationToken ct);
 
-    Task Update(Guid id, TEntity entity);
+    Task<TOutput> Update(Guid id, TInput input, CancellationToken ct);
 
-    Task Delete(Guid id);
+    Task Delete(Guid id, CancellationToken ct);
 }

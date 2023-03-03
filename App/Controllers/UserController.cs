@@ -1,5 +1,6 @@
-using CropKeeperApi.Domain.Abstractions.Repositories;
-using CropKeeperApi.Persistance.Entities;
+using CropKeeperApi.Domain.Abstractions.Services;
+using CropKeeperApi.Domain.Models.Inputs;
+using CropKeeperApi.Domain.Models.Outputs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GenericRepository.Controllers;
@@ -8,22 +9,25 @@ namespace GenericRepository.Controllers;
 [Route("api/user")]
 public class UserController
 {
-    private readonly IUserRepository _repository;
+    private readonly IUserService _service;
 
-    public UserController(IUserRepository repository)
+    public UserController(IUserService service)
     {
-        _repository = repository;
+        _service = service;
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
-    public async Task<ActionResult<User>> Create([FromBody] User user, CancellationToken ct)
+    public async Task<ActionResult<UserOutput>> Create([FromBody] UserInput user, CancellationToken ct)
     {
-        await _repository.Create(user);
+        return await _service.Create(user, ct);
+    }
 
-        var createdUser = await _repository.Get(user.Id);
-
-        return createdUser;
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<ActionResult<UserOutput>> Update(Guid id, [FromBody] UserInput user, CancellationToken ct)
+    {
+        return await _service.Update(id, user, ct);
     }
 }
 
