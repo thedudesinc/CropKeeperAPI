@@ -6,31 +6,31 @@ using CropKeeperApi.Domain.Models.Outputs;
 
 namespace CropKeeperApi.Domain.Services;
 
-public class UserService : IUserService
+public class GardenPlotService : IGardenPlotService
 {
-    private readonly IUserRepository _repository;
+    private readonly IGardenPlotRepository _repository;
 
-    public UserService(IUserRepository repository)
+    public GardenPlotService(IGardenPlotRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<IEnumerable<UserOutput>> Get(CancellationToken ct)
+    public async Task<IEnumerable<GardenPlotOutput>> Get(CancellationToken ct)
     {
         return await _repository.Get(ct);
     }
 
-    public async Task<UserOutput> Get(Guid id, CancellationToken ct)
+    public async Task<GardenPlotOutput> Get(Guid id, CancellationToken ct)
     {
         return await _repository.Get(id, ct);
     }
 
-    public async Task<UserOutput> Create(UserInput input, CancellationToken ct)
+    public async Task<GardenPlotOutput> Create(GardenPlotInput input, CancellationToken ct)
     {
         return await _repository.Create(input, ct);
     }
 
-    public async Task<UserOutput> Update(Guid id, UserInput input, CancellationToken ct)
+    public async Task<GardenPlotOutput> Update(Guid id, GardenPlotInput input, CancellationToken ct)
     {
         return await _repository.Update(id, input, ct);
     }

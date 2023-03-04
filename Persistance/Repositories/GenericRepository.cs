@@ -31,10 +31,12 @@ public class GenericRepository<TEntity, TInput, TOutput> : IGenericRepository<TE
         return (TOutput)_mapper.Map(item, item.GetType(), typeof(TOutput));
     }
 
-    // public async Task<IEnumerable<TOutput>> Find(Expression<Func<TInput, bool>> predicate)
-    // {
-    //     return await _context.Set<TEntity>().Where(predicate).ToListAsync();
-    // }
+    public async Task<IEnumerable<TOutput>> Find(Expression<Func<TEntity, bool>> predicate)
+    {
+        var items = await _context.Set<TEntity>().Where(predicate).ToListAsync();
+
+        return (IEnumerable<TOutput>)_mapper.Map(items, items.GetType(), typeof(IEnumerable<TOutput>));
+    }
 
     public async Task<TOutput> Create(TInput input, CancellationToken ct)
     {

@@ -6,41 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 namespace GenericRepository.Controllers;
 
 [ApiController]
-[Route("api/user")]
-public class UserController
+[Route("api/crop")]
+public class CropController
 {
-    private readonly IUserService _service;
+    private readonly ICropService _service;
 
-    public UserController(IUserService service)
+    public CropController(ICropService service)
     {
         _service = service;
     }
 
     [HttpGet]
-    public async Task<IEnumerable<UserOutput>> Get(CancellationToken ct)
+    public async Task<IEnumerable<CropOutput>> Get(CancellationToken ct)
     {
         return await _service.Get(ct);
     }
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<ActionResult<UserOutput>> Get(Guid id, CancellationToken ct)
+    public async Task<ActionResult<CropOutput>> Get(Guid id, CancellationToken ct)
     {
         return await _service.Get(id, ct);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
-    public async Task<ActionResult<UserOutput>> Create([FromBody] UserInput user, CancellationToken ct)
+    public async Task<ActionResult<CropOutput>> Create([FromBody] CropInput crop, CancellationToken ct)
     {
-        return await _service.Create(user, ct);
+        return await _service.Create(crop, ct);
     }
 
     [HttpPut]
     [Route("{id}")]
-    public async Task<ActionResult<UserOutput>> Update(Guid id, [FromBody] UserInput user, CancellationToken ct)
+    public async Task<ActionResult<CropOutput>> Update(Guid id, [FromBody] CropInput crop, CancellationToken ct)
     {
-        return await _service.Update(id, user, ct);
+        return await _service.Update(id, crop, ct);
     }
 
     [HttpDelete]

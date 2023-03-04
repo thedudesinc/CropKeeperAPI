@@ -11,6 +11,18 @@ public class CropKeeperProfile : Profile
     {
         CreateMap<UserInput, User>();
         CreateMap<User, UserOutput>();
+
+        CreateMap<CropInput, Crop>();
+        CreateMap<Crop, CropOutput>();
+
+        CreateMap<NotificationInput, Notification>();
+        CreateMap<Notification, NotificationOutput>();
+
+        CreateMap<GardenPlotInput, GardenPlot>();
+        CreateMap<GardenPlot, GardenPlotOutput>();
+
+        CreateMap<GardenPlotCropInput, GardenPlotCrop>();
+        CreateMap<GardenPlotCrop, GardenPlotCropOutput>();
         // Use CreateMap... Etc.. here (Profile methods are the same as configuration methods)
     }
 }

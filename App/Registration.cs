@@ -21,6 +21,10 @@ public static class Registration
         services.AddTransient<INotificationRepository, NotificationRepository>();
         services.AddTransient<ICropRepository, CropRepository>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<ICropService, CropService>();
+        services.AddTransient<INotificationService, NotificationService>();
+        services.AddTransient<IGardenPlotService, GardenPlotService>();
+        services.AddTransient<IGardenPlotCropService, GardenPlotCropService>();
 
         services.AddAutoMapper(typeof(CropKeeperProfile));
     }

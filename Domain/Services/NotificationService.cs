@@ -6,31 +6,31 @@ using CropKeeperApi.Domain.Models.Outputs;
 
 namespace CropKeeperApi.Domain.Services;
 
-public class UserService : IUserService
+public class NotificationService : INotificationService
 {
-    private readonly IUserRepository _repository;
+    private readonly INotificationRepository _repository;
 
-    public UserService(IUserRepository repository)
+    public NotificationService(INotificationRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<IEnumerable<UserOutput>> Get(CancellationToken ct)
+    public async Task<IEnumerable<NotificationOutput>> Get(CancellationToken ct)
     {
         return await _repository.Get(ct);
     }
 
-    public async Task<UserOutput> Get(Guid id, CancellationToken ct)
+    public async Task<NotificationOutput> Get(Guid id, CancellationToken ct)
     {
         return await _repository.Get(id, ct);
     }
 
-    public async Task<UserOutput> Create(UserInput input, CancellationToken ct)
+    public async Task<NotificationOutput> Create(NotificationInput input, CancellationToken ct)
     {
         return await _repository.Create(input, ct);
     }
 
-    public async Task<UserOutput> Update(Guid id, UserInput input, CancellationToken ct)
+    public async Task<NotificationOutput> Update(Guid id, NotificationInput input, CancellationToken ct)
     {
         return await _repository.Update(id, input, ct);
     }
