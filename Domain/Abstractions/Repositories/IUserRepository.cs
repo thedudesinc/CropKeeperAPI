@@ -6,5 +6,5 @@ namespace CropKeeperApi.Domain.Abstractions.Repositories;
 
 public interface IUserRepository : IGenericRepository<User, UserInput, UserOutput>
 {
-
+    Task<bool> Authenticate(LoginInput login);
 }

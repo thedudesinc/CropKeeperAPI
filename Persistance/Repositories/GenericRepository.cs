@@ -12,8 +12,8 @@ public class GenericRepository<TEntity, TInput, TOutput> : IGenericRepository<TE
     where TInput : class, IInput
     where TOutput : class, IOutput
 {
-    private readonly IMapper _mapper;
-    private readonly CropKeeperContext _context;
+    protected readonly IMapper _mapper;
+    protected readonly CropKeeperContext _context;
 
     public GenericRepository(CropKeeperContext context, IMapper mapper) => (_context, _mapper) = (context, mapper);
 
