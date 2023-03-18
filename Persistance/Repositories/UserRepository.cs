@@ -14,11 +14,4 @@ public class UserRepository : GenericRepository<User, UserInput, UserOutput>, IU
     {
 
     }
-
-    public async Task<bool> Authenticate(LoginInput login)
-    {
-        var user = await _context.Users.Where(user => user.Email == login.Email && user.Password == login.Password).SingleOrDefaultAsync();
-
-        return user != null;
-    }
 }

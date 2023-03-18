@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using CropKeeperApi.Domain.Abstractions.Entities;
 
 namespace CropKeeperApi.Domain.Models.Inputs;

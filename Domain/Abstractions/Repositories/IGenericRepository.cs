@@ -12,7 +12,7 @@ public interface IGenericRepository<TEntity, TInput, TOutput>
 
     Task<TOutput> Get(Guid id, CancellationToken ct);
 
-    // Task<IEnumerable<TOutput>> Find(Expression<Func<TInput, bool>> predicate);
+    Task<IEnumerable<TOutput>> Find(Expression<Func<TEntity, bool>> predicate);
 
     Task<TOutput> Create(TInput input, CancellationToken ct);
 

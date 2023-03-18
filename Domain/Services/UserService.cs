@@ -27,6 +27,8 @@ public class UserService : IUserService
 
     public async Task<UserOutput> Create(UserInput input, CancellationToken ct)
     {
+        input.Password = BCrypt.Net.BCrypt.HashPassword(input.Password);
+
         return await _repository.Create(input, ct);
     }
 

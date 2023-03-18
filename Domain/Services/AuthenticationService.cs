@@ -1,3 +1,4 @@
+using BCrypt.Net;
 using CropKeeperApi.Domain.Abstractions.Repositories;
 using CropKeeperApi.Domain.Abstractions.Services;
 using CropKeeperApi.Domain.Models.Inputs;
@@ -13,8 +14,14 @@ public class AuthenticationService : IAuthenticationService
         _repository = repository;
     }
 
-    public Task<bool> Authenticate(LoginInput login)
+    public async Task<bool> Authenticate(LoginInput login)
     {
-        return _repository.Authenticate(login);
+        var user = await _repository.Find(user => user.Email == login.Email);
+
+        var singleUser = user.SingleOrDefault();
+
+        if (singleUser == null) return false;
+
+        return BCrypt.Net.BCrypt.Verify(login.Password, singleUser.Password, false, HashType.SHA384);
     }
 }

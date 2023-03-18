@@ -1,10 +1,12 @@
 using CropKeeperApi.Domain.Abstractions.Services;
 using CropKeeperApi.Domain.Models.Inputs;
 using CropKeeperApi.Domain.Models.Outputs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GenericRepository.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/gardenPlot")]
 public class GardenPlotController

@@ -32,6 +32,7 @@ public class UserController
     }
 
     [HttpPost]
+    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     public async Task<ActionResult<UserOutput>> Create([FromBody] UserInput user, CancellationToken ct)
     {
