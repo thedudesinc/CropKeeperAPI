@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using CropKeeperApi.Domain.Abstractions.Entities;
 
 namespace CropKeeperApi.Domain.Models.Outputs;
@@ -10,6 +11,7 @@ public class UserOutput : IOutput
 
     public string Email { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public string Password { get; set; } = string.Empty;
 
     public bool AllowEmailNotifications { get; set; } = true;

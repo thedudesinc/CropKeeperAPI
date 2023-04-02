@@ -21,7 +21,7 @@ public partial class CropKeeperContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>().HasQueryFilter(entity => entity.DateDeleted == null);
+        modelBuilder.Entity<User>().HasQueryFilter(entity => entity.DateDeleted == null).HasIndex(u => u.Email).IsUnique();
         modelBuilder.Entity<Crop>().HasQueryFilter(entity => entity.DateDeleted == null);
         modelBuilder.Entity<GardenPlot>().HasQueryFilter(entity => entity.DateDeleted == null);
         modelBuilder.Entity<GardenPlotCrop>().HasQueryFilter(entity => entity.DateDeleted == null);
