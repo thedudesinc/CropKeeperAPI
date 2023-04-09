@@ -4,5 +4,5 @@ namespace CropKeeperApi.Domain.Abstractions.Services;
 
 public interface IAuthenticationService
 {
-    Task<bool> Authenticate(LoginInput login);
+    Task<bool> Authenticate(LoginInput login, CancellationToken ct);
 }

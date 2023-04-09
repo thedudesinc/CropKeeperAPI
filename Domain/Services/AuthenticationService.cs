@@ -14,9 +14,9 @@ public class AuthenticationService : IAuthenticationService
         _repository = repository;
     }
 
-    public async Task<bool> Authenticate(LoginInput login)
+    public async Task<bool> Authenticate(LoginInput login, CancellationToken ct)
     {
-        var user = await _repository.Find(user => user.Email == login.Email);
+        var user = await _repository.Find(user => user.Email == login.Email, ct);
 
         var singleUser = user.SingleOrDefault();
 

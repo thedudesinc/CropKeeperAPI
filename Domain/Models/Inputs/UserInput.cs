@@ -1,4 +1,5 @@
 using CropKeeperApi.Domain.Abstractions.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace CropKeeperApi.Domain.Models.Inputs;
@@ -11,6 +12,7 @@ public class UserInput : IInput
 
     [Required]
     [EmailAddress]
+    [Remote(action: "VerifyEmail", controller: "User")]
     public string Email { get; set; } = string.Empty;
 
     [Required]

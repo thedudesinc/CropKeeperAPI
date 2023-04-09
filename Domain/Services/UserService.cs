@@ -41,4 +41,11 @@ public class UserService : IUserService
     {
         await _repository.Delete(id, ct);
     }
+
+    public async Task<bool> VerifyEmail(string email, CancellationToken ct)
+    {
+        var users = await _repository.Find(users => users.Email.ToLower() == email.ToLower(), ct);
+
+        return users.Count() == 0;
+    }
 }

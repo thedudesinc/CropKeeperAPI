@@ -28,7 +28,7 @@ public class AuthenticationController
     [AllowAnonymous]
     public async Task<IResult> Login([FromBody] LoginInput user, CancellationToken ct)
     {
-        var isAuthenticated = await _authenticationService.Authenticate(user);
+        var isAuthenticated = await _authenticationService.Authenticate(user, ct);
 
         if (!isAuthenticated) return Results.Unauthorized();
 

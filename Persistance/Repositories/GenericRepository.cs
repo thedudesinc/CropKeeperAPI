@@ -31,7 +31,7 @@ public class GenericRepository<TEntity, TInput, TOutput> : IGenericRepository<TE
         return (TOutput)_mapper.Map(item, item.GetType(), typeof(TOutput));
     }
 
-    public async Task<IEnumerable<TOutput>> Find(Expression<Func<TEntity, bool>> predicate)
+    public async Task<IEnumerable<TOutput>> Find(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
     {
         var items = await _context.Set<TEntity>().Where(predicate).ToListAsync();
 

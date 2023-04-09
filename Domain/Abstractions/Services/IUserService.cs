@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using CropKeeperApi.Domain.Models.Inputs;
 using CropKeeperApi.Domain.Models.Outputs;
 
@@ -15,4 +14,6 @@ public interface IUserService
     Task<UserOutput> Update(Guid id, UserInput input, CancellationToken ct);
 
     Task Delete(Guid id, CancellationToken ct);
+
+    Task<bool> VerifyEmail(string email, CancellationToken ct);
 }

@@ -52,5 +52,12 @@ public class UserController
     {
         await _service.Delete(id, ct);
     }
-}
 
+    [HttpPost]
+    [Route("verifyEmail")]
+    [AllowAnonymous]
+    public async Task<ActionResult<bool>> VerifyEmail([FromBody] string email, CancellationToken ct)
+    {
+        return await _service.VerifyEmail(email, ct);
+    }
+}
