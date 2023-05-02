@@ -5,3 +5,11 @@ Crop Keeper is an application that will provide the user with the means to layou
 
 Plan during winter. Set Tasks. Get Reminders.
 
+# Developer Environment Initialization
+These steps need to be completed before running the app for the first time.
+
+1. Setup SQL Express on your local computer.
+2. Install dotnet CLI
+3. Install Entity Framework CLI.
+5. Run `dotnet ef database update` in your terminal. If this command doesn't work, you may not have correctly install the above dependencies. 
+6. Start debugging on the app (using F5 or clicking run in your IDE).
