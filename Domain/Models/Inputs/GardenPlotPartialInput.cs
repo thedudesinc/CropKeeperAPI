@@ -8,7 +8,7 @@ public class GardenPlotPartialInput : IInput
 
     public string PlotName { get; set; } = string.Empty;
 
-    public int ZipCode { get; set; }
+    public string ZipCode { get; set; } = string.Empty;
 
     public string? Notes { get; set; }
 }

@@ -14,7 +14,7 @@ public class GardenPlotInput : IInput
 
     public DateTime LastFrostDate { get; set; }
 
-    public int ZipCode { get; set; }
+    public string ZipCode { get; set; } = string.Empty;
 
     public string? Notes { get; set; }
 }

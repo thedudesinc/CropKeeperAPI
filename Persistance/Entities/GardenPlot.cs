@@ -16,7 +16,7 @@ public class GardenPlot : IEntity
 
     public DateTime LastFrostDate { get; set; }
 
-    public int ZipCode { get; set; }
+    public string ZipCode { get; set; } = string.Empty;
 
     public string? Notes { get; set; }
 
