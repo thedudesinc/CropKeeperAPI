@@ -3,9 +3,11 @@ using System.Security.Claims;
 using System.Text;
 using CropKeeperApi.Domain.Abstractions.Services;
 using CropKeeperApi.Domain.Models.Inputs;
+using CropKeeperApi.App.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 
 namespace CropKeeperApi.App.Controllers;
 
@@ -16,21 +18,23 @@ public class AuthenticationController
 {
     private readonly IConfiguration _configuration;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IUserService _userService;
 
-    public AuthenticationController(IConfiguration configuration, IAuthenticationService authenticationService)
+    public AuthenticationController(IConfiguration configuration, IAuthenticationService authenticationService, IUserService userService)
     {
         _configuration = configuration;
         _authenticationService = authenticationService;
+        _userService = userService;
     }
 
     [HttpPost]
     [Route("login")]
     [AllowAnonymous]
-    public async Task<IResult> Login([FromBody] LoginInput user, CancellationToken ct)
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginInput user, CancellationToken ct)
     {
-        var isAuthenticated = await _authenticationService.Authenticate(user, ct);
+        var userResponse = await _authenticationService.Authenticate(user, ct);
 
-        if (!isAuthenticated) return Results.Unauthorized();
+        if (userResponse == null) throw new HttpRequestException("unauthorized", null, HttpStatusCode.Unauthorized);
 
         var issuer = _configuration.GetValue<string>("Jwt:Issuer");
         var audience = _configuration.GetValue<string>("Jwt:Audience");
@@ -53,6 +57,14 @@ public class AuthenticationController
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var jwtToken = tokenHandler.WriteToken(token);
         var stringToken = tokenHandler.WriteToken(token);
-        return Results.Ok(stringToken);
+        var loginResponse = new LoginResponse()
+        {
+            DisplayName = userResponse.DisplayName,
+            Email = userResponse.Email,
+            AllowEmailNotifications = userResponse.AllowEmailNotifications,
+            AllowSiteNotifications = userResponse.AllowSiteNotifications,
+            StringToken = stringToken
+        };
+        return loginResponse;
     }
 }
