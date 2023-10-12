@@ -15,14 +15,14 @@ public class UserInput : IInput
     [Remote(action: "VerifyEmail", controller: "User")]
     public string Email { get; set; } = string.Empty;
 
-    [Required]
-    [StringLength(100, ErrorMessage = "{0} length must be at least {2} characters", MinimumLength = 10)]
-    public string Password { get; set; } = string.Empty;
+    public string? Password { get; set; }
 
     [Required]
     [RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$",
          ErrorMessage = "Zip Code must be in the format of '#####' or '#####-####', example: '32334' or '32334-0092'")]
     public string Zip { get; set; } = string.Empty;
+
+    public string DisplayImageUrl { get; set; } = string.Empty;
 
     [Required]
     public bool AllowEmailNotifications { get; set; } = true;

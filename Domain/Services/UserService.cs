@@ -1,8 +1,11 @@
 using System.Linq.Expressions;
+using CropKeeperApi.App.Requests;
 using CropKeeperApi.Domain.Abstractions.Repositories;
 using CropKeeperApi.Domain.Abstractions.Services;
 using CropKeeperApi.Domain.Models.Inputs;
 using CropKeeperApi.Domain.Models.Outputs;
+using CropKeeperApi.Persistance.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CropKeeperApi.Domain.Services;
 
@@ -42,9 +45,11 @@ public class UserService : IUserService
         await _repository.Delete(id, ct);
     }
 
-    public async Task<bool> VerifyEmail(string email, CancellationToken ct)
+    public async Task<bool> VerifyEmail(VerifyEmailRequest verifyEmailRequest, CancellationToken ct)
     {
-        var users = await _repository.Find(users => users.Email.ToLower() == email.ToLower(), ct);
+        if (verifyEmailRequest.Email.ToLower() == verifyEmailRequest.OmittedEmail.ToLower()) return true;
+
+        var users = await _repository.Find(users => users.Email.ToLower() == verifyEmailRequest.Email.ToLower(), ct);
 
         return users.Count() == 0;
     }

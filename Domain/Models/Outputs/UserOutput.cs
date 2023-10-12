@@ -11,6 +11,10 @@ public class UserOutput : IOutput
 
     public string Email { get; set; } = string.Empty;
 
+    public string Zip { get; set; } = string.Empty;
+
+    public string DisplayImageUrl { get; set; } = string.Empty;
+
     [JsonIgnore]
     public string Password { get; set; } = string.Empty;
 

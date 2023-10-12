@@ -1,3 +1,4 @@
+using CropKeeperApi.App.Requests;
 using CropKeeperApi.Domain.Abstractions.Services;
 using CropKeeperApi.Domain.Models.Inputs;
 using CropKeeperApi.Domain.Models.Outputs;
@@ -56,8 +57,8 @@ public class UserController
     [HttpPost]
     [Route("verifyEmail")]
     [AllowAnonymous]
-    public async Task<ActionResult<bool>> VerifyEmail([FromBody] string email, CancellationToken ct)
+    public async Task<ActionResult<bool>> VerifyEmail([FromBody] VerifyEmailRequest verifyEmailRequest, CancellationToken ct)
     {
-        return await _service.VerifyEmail(email, ct);
+        return await _service.VerifyEmail(verifyEmailRequest, ct);
     }
 }

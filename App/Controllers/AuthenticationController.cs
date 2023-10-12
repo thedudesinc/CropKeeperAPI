@@ -43,7 +43,7 @@ public class AuthenticationController
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim("Id", Guid.NewGuid().ToString()),
+                new Claim("Id", userResponse.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -55,12 +55,13 @@ public class AuthenticationController
         };
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        var jwtToken = tokenHandler.WriteToken(token);
         var stringToken = tokenHandler.WriteToken(token);
         var loginResponse = new LoginResponse()
         {
+            Id = userResponse.Id,
             DisplayName = userResponse.DisplayName,
             Email = userResponse.Email,
+            DisplayImageUrl = userResponse.DisplayImageUrl,
             AllowEmailNotifications = userResponse.AllowEmailNotifications,
             AllowSiteNotifications = userResponse.AllowSiteNotifications,
             StringToken = stringToken

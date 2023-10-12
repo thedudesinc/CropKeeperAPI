@@ -14,6 +14,8 @@ public class User : IEntity
 
     public string Zip { get; set; } = string.Empty;
 
+    public string DisplayImageUrl { get; set; } = string.Empty;
+
     public bool AllowEmailNotifications { get; set; } = true;
 
     public bool AllowSiteNotifications { get; set; } = true;
