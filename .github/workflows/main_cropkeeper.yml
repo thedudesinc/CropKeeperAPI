@@ -32,7 +32,7 @@ jobs:
         run: dotnet tool install -g dotnet-ef --version 7.0.3
 
       - name: dotnet bundle migration
-        run: dotnet ef migrations bundle --self-contained -r linux-x64 --verbose
+        run: dotnet ef migrations bundle --self-contained --verbose
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
