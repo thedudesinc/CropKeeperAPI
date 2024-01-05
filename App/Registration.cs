@@ -13,7 +13,7 @@ public static class Registration
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<CropKeeperContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("CropKeeperDbContext")));
+                options.UseSqlServer(configuration.GetConnectionString("CropKeeperDbContext"), providerOptions => { providerOptions.EnableRetryOnFailure(); }));
 
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IGardenPlotRepository, GardenPlotRepository>();
