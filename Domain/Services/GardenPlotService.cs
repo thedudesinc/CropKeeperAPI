@@ -25,6 +25,11 @@ public class GardenPlotService : IGardenPlotService
         return await _repository.Get(id, ct);
     }
 
+    public async Task<IEnumerable<GardenPlotOutput>> GetByUserId(Guid id, CancellationToken ct)
+    {
+        return await _repository.Find((gardenPlot) => gardenPlot.UserId == id, ct);
+    }
+
     public async Task<GardenPlotOutput> Create(GardenPlotInput input, CancellationToken ct)
     {
         return await _repository.Create(input, ct);

@@ -6,14 +6,17 @@ Crop Keeper is an application that will provide the user with the means to layou
 Plan during winter. Set Tasks. Get Reminders.
 
 # Developer Environment Initialization
+
 These steps need to be completed before running the app for the first time.
 
 1. Setup SQL Express on your local computer.
 2. Install dotnet CLI
 3. Install Entity Framework CLI.
-5. Run `dotnet ef database update` in your terminal. If this command doesn't work, you may not have correctly install the above dependencies. 
-6. Start debugging on the app (using F5 or clicking run in your IDE).
+4. Run `dotnet ef database update` in your terminal. If this command doesn't work, you may not have correctly install the above dependencies.
+5. Start debugging on the app (using F5 or clicking run in your IDE).
 
 # Database Migration for Remote SQL Azure Instance
-1. Run `dotnet ef migrations bundle --self-contained --verbose`
-2. Run `.\efbundle.exe --connection '<insert remote connection string here>'`
+
+1. Run `dotnet ef migrations bundle --configuration Production --verbose --force`
+2. Run `.\efbundle.exe --connection "<insert remote connection string here>"`
+3. Delete efbundle.exe

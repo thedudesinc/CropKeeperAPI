@@ -6,7 +6,7 @@ public class GardenPlot : IEntity
 {
     public Guid Id { get; set; }
 
-    public string UserId { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
 
     public string FabricJson { get; set; } = string.Empty;
 

@@ -31,6 +31,13 @@ public class GardenPlotController
         return await _service.Get(id, ct);
     }
 
+    [HttpGet]
+    [Route("getByUserId/{id}")]
+    public async Task<IEnumerable<GardenPlotOutput>> GetByUserId(Guid id, CancellationToken ct)
+    {
+        return await _service.GetByUserId(id, ct);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
     public async Task<ActionResult<GardenPlotOutput>> Create([FromBody] GardenPlotInput gardenPlot, CancellationToken ct)
